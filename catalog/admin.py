@@ -2,9 +2,13 @@ from django.contrib import admin
 
 from .models import Author, Genre, Book, BookInstance
 
+class BookInstanceInline(admin.TabularInline):
+    model = BookInstance
+
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     list_display = ('title','author', 'display_genre')
+    inlines = [BookInstanceInline]
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
@@ -18,3 +22,12 @@ class GenreAdmin(admin.ModelAdmin):
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
     list_filter = ('status', 'due_back')
+
+    fieldsets = (
+        (None, {
+            'fields' : ('book', 'imprint', 'id')
+        }),
+        ('Availability', {
+            'fields': ('status','due_back')
+        }),
+    )
