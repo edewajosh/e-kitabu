@@ -1,0 +1,14 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <h2 class="d-flex">List of all available books </h2>
+    {% if book_list %}
+        <ul>
+            {% for book in book_list %}
+                <li>{{ book.title }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+    <p>No books in the library </p>
+    {% endif %}
+{% endblock %}
